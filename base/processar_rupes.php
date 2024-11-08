@@ -13,6 +13,7 @@
                  $pdo->query($sql);
              }
              echo "<script>alert('Dados inseridos com sucesso!')</script>";
+             header('Location: ../index.php');
          } else {
              echo "<script>alert('Erro ao processar os dados');</script>";
          }
