@@ -1,22 +1,22 @@
 <?php
     include('../config/config.php');
+    try {
+         // Decodifique os dados JSON
+         $dados = json_decode($_POST['dados'], true);
 
-    // Decodifique os dados JSON
-    $dados = json_decode($_POST['dados'], true);
-
-    if ($dados) {
-        $stmt = $pdo->prepare("INSERT INTO sua_tabela (referencia, gpt, data_vencimento, situacao, data_pagamento) VALUES (?, ?, ?, ?, ?)");
-        foreach ($dados as $linha) {
-            $stmt->execute([
-                $linha['referencia'],
-                $linha['gpt'],
-                $linha['data_vencimento'],
-                $linha['situacao'],
-                $linha['data_pagamento']
-            ]);
-        }
-        echo "<script>alert('Dados inseridos com sucesso!')</script>";
-    } else {
-        echo "<script>alert('Erro ao processar os dados').</script>";
+         if ($dados) {
+             foreach ($dados as $linha) {
+                 $dataString = $linha['data_vencimento'];
+                 $data = DateTime::createFromFormat('d/m/Y', $dataString);
+                 $formato = $data->format('Y-m-d H:i:s');
+                 $sql = "INSERT INTO rupes VALUES (Default, '".$linha['referencia']."', '".$linha['gpt']."', 0, '".$formato."')";
+                 $pdo->query($sql);
+             }
+             echo "<script>alert('Dados inseridos com sucesso!')</script>";
+         } else {
+             echo "<script>alert('Erro ao processar os dados');</script>";
+         }
+    } catch (\Throwable $th) {
+        echo "<script>alert('Erro ao processar os dados');</script>";
     }
 ?>

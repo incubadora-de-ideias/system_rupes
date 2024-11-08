@@ -71,7 +71,7 @@ if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) 
     $caminhoTemp = $_FILES['arquivo']['tmp_name'];
 
     if (($handle = fopen($caminhoTemp, 'r')) !== FALSE) {
-        echo '<form action="processar_dados.php" method="post">';
+        echo '<form action="../base/processar_rupes.php" method="post">';
         echo '<table>';
         echo '<tr><th>Nº Referência</th><th>Nº GPT</th><th>Data Vencimento</th><th>Situação</th><th>Data Pagamento</th></tr>';
 
