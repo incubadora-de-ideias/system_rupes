@@ -3,124 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #ffffff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-            overflow-x: auto;
-        }
-        h1 {
-            font-size: 24px;
-            color: #333333;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-            font-size: 14px;
-            color: #555555;
-        }
-        th {
-            background-color: #4CAF50;
-            color: #ffffff;
-            font-weight: bold;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .message {
-            color: #d9534f;
-            font-size: 14px;
-            margin-top: 15px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Dados Processados</title>
+    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <!-- Fonts and icons -->
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["../assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Relatório dos Rupes</h1>
-        <?php
-        $tableData = []; // Variável para armazenar os dados da tabela
+    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px;">
+        <a href="../index.php" class="text-white py-2 d-block"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="../routes/rupes.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Rupes</a>
+        <a href="../routes/relatorio.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Relatórios</a>
+        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-chart-bar"></i> Rupes</a>
+        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-file-alt"></i> Relatórios</a>
+        <a href="routes/settings.php" class="text-white py-2 d-block"><i class="fas fa-cogs"></i> Configurações</a>
+    </nav>
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <h1 class="text-center mb-4"><i class="fas fa-file-alt"></i> Dados do Arquivo Importado</h1>
 
-        if (isset($_POST['submit'])) {
-            if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] == 0) {
-                $fileTmpPath = $_FILES['arquivo']['tmp_name'];
-                $fileType = $_FILES['arquivo']['type'];
-                $fileExtension = pathinfo($_FILES['arquivo']['name'], PATHINFO_EXTENSION);
+                <?php
+                if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
+                    $caminhoTemp = $_FILES['arquivo']['tmp_name'];
 
-                if ($fileType == 'text/csv' || $fileExtension == 'csv') {
-                    if (($handle = fopen($fileTmpPath, 'r')) !== false) {
-                        echo "<table>";
-                        // Lê e exibe o cabeçalho
-                        $header = fgetcsv($handle, 1000, ',');
-                        if ($header) {
-                            echo "<tr>";
-                            foreach ($header as $col) {
-                                echo "<th>" . htmlspecialchars($col) . "</th>";
-                            }
-                            echo "</tr>";
+                    if (($handle = fopen($caminhoTemp, 'r')) !== FALSE) {
+                        echo '<form action="../base/processar_relatorio.php" method="post">';
+                        echo '<div class="table-responsive"><table class="table table-striped table-bordered">';
+                        echo '<thead class="thead-dark"><tr><th>Nome do Serviço</th><th>Número do Protocolo</th><th>Taxa</th><th>Contribuinte</th><th>Data da Solicitação</th><th>Situação</th><th>Moeda</th></tr></thead><tbody>';
 
-                            // Lê e exibe cada linha de dados
-                            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
-                                $tableData[] = $data; // Armazena a linha de dados
-                                echo "<tr>";
-                                foreach ($data as $value) {
-                                    echo "<td>" . htmlspecialchars($value) . "</td>";
-                                }
-                                echo "</tr>";
-                            }
+                        // Ignora a primeira linha (cabeçalho)
+                        fgetcsv($handle, 1000, ',');
+
+                        // Armazena as linhas em um array para enviar via POST
+                        $dados = [];
+                        while (($linha = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($linha[0]) . '</td>';
+                            echo '<td>' . htmlspecialchars($linha[1]) . '</td>';
+                            echo '<td>' . htmlspecialchars($linha[2]) . '</td>';
+                            echo '<td>' . htmlspecialchars($linha[3]) . '</td>';
+                            echo '<td>' . htmlspecialchars($linha[4]) . '</td>';
+                            echo '<td>' . htmlspecialchars($linha[5]) . '</td>';
+                            echo '<td>' . htmlspecialchars($linha[6]) . '</td>';
+                            echo '</tr>';
+
+                            // Adiciona a linha ao array $dados
+                            $dados[] = [
+                                'nome_servico' => $linha[0],
+                                'numero_protocolo' => $linha[1],
+                                'taxa' => $linha[2],
+                                'contribuinte' => $linha[3],
+                                'data_solicitacao' => $linha[4],
+                                'situacao' => $linha[5],
+                                'moeda' => $linha[6],
+                            ];
                         }
-                        echo "</table>";
+
+                        // Codifica os dados para envio via input hidden
+                        echo '<input type="hidden" name="dados" value="' . htmlspecialchars(json_encode($dados)) . '">';
+
+                        echo '</tbody></table></div>';
                         fclose($handle);
+
+                        echo '<div class="text-center">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-database"></i> Enviar para o Banco de Dados</button>
+                              </div>';
+                        echo '</form>';
                     } else {
-                        echo "<p class='message'>Erro ao abrir o arquivo CSV.</p>";
+                        echo "<p>Não foi possível ler o arquivo CSV.</p>";
                     }
                 } else {
-                    echo "<p class='message'>Por favor, envie um arquivo CSV válido.</p>";
+                    echo "<p>Erro no upload do arquivo.</p>";
                 }
-            } else {
-                echo "<p class='message'>Erro no upload do arquivo.</p>";
-            }
-        } else {
-            echo "<p class='message'>Nenhum arquivo enviado.</p>";
-        }
-        ?><br>
+                ?>
 
-        <!-- Formulário para enviar os dados para a base de dados -->
-        <form action="../base/processar_relatorio.php" method="POST">
-            <input type="hidden" name="tableData" value='<?php echo json_encode($tableData); ?>'>
-            <button type="submit">Enviar para a Base de Dados</button>
-        </form>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contato</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright ml-auto">
+                    2024, feito com <i class="fa fa-heart heart text-danger"></i> por Você
+                </div>
+            </div>
+        </footer>
     </div>
+    </div>
+
+    <!-- Core JS Files -->
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="../assets/js/kaiadmin.min.js"></script>
 </body>
 </html>

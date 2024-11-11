@@ -9,11 +9,17 @@
                  $dataString = $linha['data_vencimento'];
                  $data = DateTime::createFromFormat('d/m/Y', $dataString);
                  $formato = $data->format('Y-m-d H:i:s');
-                 $sql = "INSERT INTO rupes VALUES (Default, '".$linha['referencia']."', '".$linha['gpt']."', 0, '".$formato."')";
-                 $pdo->query($sql);
+
+                 $checkSql = "SELECT * FROM rupes WHERE rupe = '".$linha['referencia']."'";
+                 $checar = $pdo->query($checkSql);
+                 $exists = $checar->rowCount();
+                 if(!$exists){
+                    $sql = "INSERT INTO rupes VALUES (Default, '".$linha['referencia']."', '".$linha['gpt']."', 0, '".$formato."')";
+                    $pdo->query($sql);
+                 }
              }
              echo "<script>alert('Dados inseridos com sucesso!')</script>";
-             header('Location: ../index.php');
+             header('Location: ../routes/vizualizar.php');
          } else {
              echo "<script>alert('Erro ao processar os dados');</script>";
          }

@@ -5,75 +5,49 @@ echo '<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dados Processados</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #ffffff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            font-size: 24px;
-            color: #333333;
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-            color: #555555;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <!-- Fonts and icons -->
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["../assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Dados do Arquivo Importado</h1>';
+    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px;">
+        <a href="../index.php" class="text-white py-2 d-block"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="../routes/rupes.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Rupes</a>
+        <a href="../routes/relatorio.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Relatórios</a>
+        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-chart-bar"></i> Rupes</a>
+        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-file-alt"></i> Relatórios</a>
+        <a href="routes/settings.php" class="text-white py-2 d-block"><i class="fas fa-cogs"></i> Configurações</a>
+    </nav>
+        <div class="main-panel">
+            <div class="content">
+                <div class="container-fluid">
+                    <h1 class="text-center mb-4"><i class="fas fa-file-alt"></i> Dados do Arquivo Importado</h1>';
 
 if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
     $caminhoTemp = $_FILES['arquivo']['tmp_name'];
 
     if (($handle = fopen($caminhoTemp, 'r')) !== FALSE) {
         echo '<form action="../base/processar_rupes.php" method="post">';
-        echo '<table>';
-        echo '<tr><th>Nº Referência</th><th>Nº GPT</th><th>Data Vencimento</th><th>Situação</th><th>Data Pagamento</th></tr>';
+        echo '<div class="table-responsive"><table class="table table-striped table-bordered">';
+        echo '<thead class="thead-dark"><tr><th>Nº Referência</th><th>Nº GPT</th><th>Data Vencimento</th><th>Situação</th><th>Data Pagamento</th></tr></thead><tbody>';
 
         // Ignora a primeira linha (cabeçalho)
         fgetcsv($handle, 1000, ',');
@@ -101,12 +75,12 @@ if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) 
 
         // Codifica os dados para envio via input hidden
         echo '<input type="hidden" name="dados" value="' . htmlspecialchars(json_encode($dados)) . '">';
-        
-        echo '</table>';
+
+        echo '</tbody></table></div>';
         fclose($handle);
 
-        echo '<div class="button-container">
-                <button type="submit">Enviar para o Banco de Dados</button>
+        echo '<div class="text-center">
+                <button type="submit" class="btn btn-success"><i class="fas fa-database"></i> Enviar para o Banco de Dados</button>
               </div>';
         echo '</form>';
     } else {
@@ -117,6 +91,30 @@ if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) 
 }
 
 echo '</div>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container-fluid">
+        <nav class="pull-left">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contato</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="copyright ml-auto">
+            2024, feito com <i class="fa fa-heart heart text-danger"></i> por Você
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+<!-- Core JS Files -->
+<script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+<script src="../assets/js/kaiadmin.min.js"></script>
 </body>
 </html>';
-?>
