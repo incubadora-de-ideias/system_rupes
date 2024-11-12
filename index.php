@@ -1,5 +1,6 @@
 <?php 
     include('./config/estatistica.php');
+    include('./base/pagamentos.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -232,7 +233,10 @@
                 labels: ['Pagos', 'Não Pagos'],
                 datasets: [{
                     label: 'Status de Pagamento',
-                    data: [30, 15], // Dados fictícios, substitua conforme necessário
+                    data: [
+                        <?php echo $paga ?>, 
+                        15
+                    ], // Dados fictícios, substitua conforme necessário
                     backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
                     borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
                     borderWidth: 1
