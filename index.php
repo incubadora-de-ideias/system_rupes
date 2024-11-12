@@ -123,16 +123,6 @@
 
     <!-- Conteúdo Principal -->
     <div class="main-content" style="padding: 30px; background-color: #f4f4f9;">
-        
-        <!-- Cabeçalho -->
-        <header class="mb-4">
-            <div class="header-icons">
-                <i class="fas fa-bell mr-3"></i> <!-- Ícone de notificação -->
-                <i class="fas fa-cogs mr-3"></i> <!-- Ícone de configurações -->
-                <img src="assets/img/profile.jpg" alt="Foto de Perfil" class="profile-img" style="width: 40px; height: 40px; border-radius: 50%;">
-            </div>
-        </header>
-
         <!-- Estatísticas -->
         <div class="row mb-5">
             <div class="col-lg-3 col-md-6 col-sm-12">

@@ -223,6 +223,27 @@
             sidebar.classList.toggle("d-none");
         });
     </script>
+    <script>
+        // Função para aplicar o tema
+        function applyTheme(theme) {
+            document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
+        }
+
+        // Salva e aplica o tema selecionado
+        document.getElementById("theme").addEventListener("change", function () {
+            const selectedTheme = this.value;
+            localStorage.setItem("theme", selectedTheme);
+            applyTheme(selectedTheme);
+        });
+
+        // Ao carregar a página, aplica o tema salvo
+        document.addEventListener("DOMContentLoaded", function () {
+            const savedTheme = localStorage.getItem("theme") || "light";
+            document.getElementById("theme").value = savedTheme;
+            applyTheme(savedTheme);
+        });
+    </script>
+
 
 </body>
 

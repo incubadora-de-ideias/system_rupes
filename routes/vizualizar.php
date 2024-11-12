@@ -49,15 +49,7 @@
     <!-- Conteúdo Principal -->
     <div class="main-panel" style="margin-left: 250px; margin-right: 0;">
         <div class="content">
-            <div class="container-fluid">
-                <!-- Cabeçalho -->
-                <header class="mb-4">
-                    <div class="header-icons d-flex justify-content-end">
-                        <i class="fas fa-bell mr-3"></i> <!-- Ícone de notificação -->
-                        <i class="fas fa-cogs mr-3"></i> <!-- Ícone de configurações -->
-                        <img src="../assets/img/profile.jpg" alt="Foto de Perfil" class="profile-img" style="width: 40px; height: 40px; border-radius: 50%;">
-                    </div>
-                </header>
+            <div class="container-fluid"> <br><br>
 
                 <!-- Caixa de pesquisa e seletor de quantidade de registros -->
                 <div class="row mb-3">
