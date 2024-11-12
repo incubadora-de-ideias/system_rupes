@@ -23,8 +23,8 @@
 
                 // Se não existir, inserir os dados
                 if ($exists == 0) {
-                    $insertSql = "INSERT INTO relatorio (nome_servico, numero_protocolo, taxa, contribuinte, data_solicitacao, moeda) 
-                                VALUES (:nome_servico, :numero_protocolo, :taxa, :contribuinte, :data_solicitacao, :moeda)";
+                    $insertSql = "INSERT INTO relatorio (nome_servico, n_protocolo, taxa, contribuinte, data_solicitacao, situacao, moeda) 
+                                VALUES (:nome_servico, :numero_protocolo, :taxa, :contribuinte, :data_solicitacao, :situacao, :moeda)";
                     $insertStmt = $pdo->prepare($insertSql);
                     
                     $insertStmt->bindParam(':nome_servico', $row['nome_servico'], PDO::PARAM_STR);
@@ -32,12 +32,10 @@
                     $insertStmt->bindParam(':taxa', $row['taxa'], PDO::PARAM_STR);
                     $insertStmt->bindParam(':contribuinte', $row['contribuinte'], PDO::PARAM_STR);
                     $insertStmt->bindParam(':data_solicitacao', $formato, PDO::PARAM_STR);
+                    $insertStmt->bindParam(':situacao', $row['situacao'], PDO::PARAM_STR);
                     $insertStmt->bindParam(':moeda', $row['moeda'], PDO::PARAM_STR);
-                    if ($insertStmt->execute()) {
-                        echo "<script>alert('Dados enviados para a base de dados com sucesso!');</script>";
-                    } else {
-                        echo "<script>alert('Erro ao inserir dados.');</script>";
-                    }
+                    $insertStmt->execute();
+                    echo "<script>alert('Dados enviados para a base de dados com sucesso!');</script>";
                 }
             }
         }

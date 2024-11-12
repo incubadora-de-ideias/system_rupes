@@ -28,18 +28,20 @@ echo '<!DOCTYPE html>
     <link rel="stylesheet" href="../assets/css/demo.css" />
 </head>
 <body>
-    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px;">
-        <a href="../index.php" class="text-white py-2 d-block"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="../routes/rupes.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Rupes</a>
-        <a href="../routes/relatorio.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Relatórios</a>
-        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-chart-bar"></i> Rupes</a>
-        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-file-alt"></i> Relatórios</a>
-        <a href="routes/settings.php" class="text-white py-2 d-block"><i class="fas fa-cogs"></i> Configurações</a>
+    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px; border-radius: 0 15px 15px 0; box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);">
+        <h2 class="h4 mb-4">Painel de Administração</h2>
+        <a href="../index.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="../routes/rupes.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-upload"></i> Importar Rupes</a>
+        <a href="../routes/relatorio.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-upload"></i> Importar Relatórios</a>
+        <a href="../routes/vizualizar.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-chart-bar"></i> Rupes</a>
+        <a href="../routes/reports.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-file-alt"></i> Relatórios</a>
+        <a href="../routes/configuracao.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-cogs"></i> Configurações</a>
     </nav>
-        <div class="main-panel">
-            <div class="content">
-                <div class="container-fluid">
-                    <h1 class="text-center mb-4"><i class="fas fa-file-alt"></i> Dados do Arquivo Importado</h1>';
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <h1 class="text-center mb-4"><i class="fas fa-file-alt"></i> Dados do Arquivo Importado</h1>';
 
 if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
     $caminhoTemp = $_FILES['arquivo']['tmp_name'];
@@ -55,21 +57,28 @@ if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) 
         // Armazena as linhas em um array para enviar via POST
         $dados = [];
         while (($linha = fgetcsv($handle, 1000, ',')) !== FALSE) {
+            // Verifica se a linha possui o número esperado de colunas (ou mais)
+            $referencia = isset($linha[0]) ? htmlspecialchars($linha[0]) : 'N/A';
+            $gpt = isset($linha[1]) ? htmlspecialchars($linha[1]) : 'N/A';
+            $data_vencimento = isset($linha[2]) ? htmlspecialchars($linha[2]) : 'N/A';
+            $situacao = isset($linha[3]) ? htmlspecialchars($linha[3]) : 'N/A';
+            $data_pagamento = isset($linha[4]) ? htmlspecialchars($linha[4]) : 'N/A';
+
             echo '<tr>';
-            echo '<td>' . htmlspecialchars($linha[0]) . '</td>';
-            echo '<td>' . htmlspecialchars($linha[1]) . '</td>';
-            echo '<td>' . htmlspecialchars($linha[2]) . '</td>';
-            echo '<td>' . htmlspecialchars($linha[3]) . '</td>';
-            echo '<td>' . htmlspecialchars($linha[4]) . '</td>';
+            echo '<td>' . $referencia . '</td>';
+            echo '<td>' . $gpt . '</td>';
+            echo '<td>' . $data_vencimento . '</td>';
+            echo '<td>' . $situacao . '</td>';
+            echo '<td>' . $data_pagamento . '</td>';
             echo '</tr>';
 
             // Adiciona a linha ao array $dados
             $dados[] = [
-                'referencia' => $linha[0],
-                'gpt' => $linha[1],
-                'data_vencimento' => $linha[2],
-                'situacao' => $linha[3],
-                'data_pagamento' => $linha[4],
+                'referencia' => $referencia,
+                'gpt' => $gpt,
+                'data_vencimento' => $data_vencimento,
+                'situacao' => $situacao,
+                'data_pagamento' => $data_pagamento,
             ];
         }
 

@@ -27,14 +27,16 @@
     <link rel="stylesheet" href="../assets/css/demo.css" />
 </head>
 <body>
-    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px;">
-        <a href="../index.php" class="text-white py-2 d-block"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="../routes/rupes.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Rupes</a>
-        <a href="../routes/relatorio.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Relatórios</a>
-        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-chart-bar"></i> Rupes</a>
-        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-file-alt"></i> Relatórios</a>
-        <a href="routes/settings.php" class="text-white py-2 d-block"><i class="fas fa-cogs"></i> Configurações</a>
-    </nav>
+<nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px; border-radius: 0 15px 15px 0; box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);">
+    <h2 class="h4 mb-4">Painel de Administração</h2>
+    <a href="../index.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="../routes/rupes.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-upload"></i> Importar Rupes</a>
+    <a href="../routes/relatorio.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-upload"></i> Importar Relatórios</a>
+    <a href="../routes/vizualizar.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-chart-bar"></i> Rupes</a>
+    <a href="../routes/reports.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-file-alt"></i> Relatórios</a>
+    <a href="../routes/configuracao.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-cogs"></i> Configurações</a>
+</nav>
+
     <div class="main-panel">
         <div class="content">
             <div class="container-fluid">
@@ -108,9 +110,6 @@
                         </li>
                     </ul>
                 </nav>
-                <div class="copyright ml-auto">
-                    2024, feito com <i class="fa fa-heart heart text-danger"></i> por Você
-                </div>
             </div>
         </footer>
     </div>

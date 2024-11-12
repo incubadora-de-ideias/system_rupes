@@ -15,20 +15,21 @@
 <body>
 
     <!-- Barra Lateral -->
-    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px;">
+    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px; border-radius: 0 15px 15px 0; box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);">
         <h2 class="h4 mb-4">Painel de Administração</h2>
-        <a href="../index.php" class="text-white py-2 d-block"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="./rupes.php" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Rupes</a>
-        <a href="#" class="text-white py-2 d-block"><i class="fas fa-upload"></i> Importar Relatórios</a>
-        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-chart-bar"></i> Rupes</a>
-        <a href="routes/reports.php" class="text-white py-2 d-block"><i class="fas fa-file-alt"></i> Relatórios</a>
-        <a href="./configuracao.php" class="text-white py-2 d-block"><i class="fas fa-cogs"></i> Configurações</a>
+        <a href="../index.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="./rupes.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-upload"></i> Importar Rupes</a>
+        <a href="#" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-upload"></i> Importar Relatórios</a>
+        <a href="./vizualizar.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-chart-bar"></i> Rupes</a>
+        <a href="./reports.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-file-alt"></i> Relatórios</a>
+        <a href="./configuracao.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-cogs"></i> Configurações</a>
     </nav>
+
 
     <!-- Conteúdo Principal -->
     <div class="main-content" style="margin-left: 250px; padding: 30px; background-color: #f4f4f9; height: 100vh;">
         <div class="container mt-5">
-            <h1 class="text-center mb-4">Importação de Relatório</h1>
+            <h1 class="text-center mb-4"><i class="fas fa-upload"></i> Importação de Relatório</h1>
             
             <form action="../services/importarRelatorio.php" method="post" enctype="multipart/form-data" class="bg-white p-4 rounded shadow">
                 <div class="mb-3">
