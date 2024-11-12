@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações</title>
     <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
-    
+
     <!-- Fonts and icons -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
-      WebFont.load({
-        google: { families: ["Public Sans:300,400,500,600,700"] },
-        custom: {
-          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
-          urls: ["../assets/css/fonts.min.css"],
-        },
-        active: function () {
-          sessionStorage.fonts = true;
-        },
-      });
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+                urls: ["../assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
     </script>
 
     <!-- CSS Files -->
@@ -27,10 +28,12 @@
     <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="../assets/css/demo.css" />
 </head>
+
 <body>
 
-    <!-- Barra Lateral -->
-    <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px; border-radius: 0 15px 15px 0; box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);">
+    <!-- Barra Lateral (oculta em telas pequenas, visível em telas maiores) -->
+    <nav id="sidebar" class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed d-none d-md-block"
+        style="height: 100vh; width: 250px; border-radius: 0 15px 15px 0; box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);">
         <h2 class="h4 mb-4">Painel de Administração</h2>
         <a href="../index.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         <a href="./rupes.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-upload"></i> Importar Rupes</a>
@@ -40,6 +43,11 @@
         <a href="#" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-cogs"></i> Configurações</a>
     </nav>
 
+    <!-- Botão de Menu Hambúrguer (visível em telas pequenas) -->
+    <button id="menu-toggle" class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#sidebar"
+        aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
     <!-- Conteúdo Principal -->
     <div class="main-panel" style="margin-left: 250px;">
@@ -58,11 +66,13 @@
                                 <form action="processar_config.php" method="POST">
                                     <div class="form-group">
                                         <label for="name">Nome Completo</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Digite seu nome" value="Usuário Exemplo">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Digite seu nome"
+                                            value="Usuário Exemplo">
                                     </div>
                                     <div class="form-group">
                                         <label for="email">E-mail</label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" value="usuario@exemplo.com">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail"
+                                            value="usuario@exemplo.com">
                                     </div>
                                     <div class="form-group">
                                         <label for="profile_image">Foto de Perfil</label>
@@ -204,5 +214,16 @@
     <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
     <script src="../assets/js/kaiadmin.min.js"></script>
+
+    <!-- Script para controlar o menu hambúrguer -->
+    <script>
+        // Mostrar e esconder a barra lateral ao clicar no menu hambúrguer
+        document.getElementById("menu-toggle").addEventListener("click", function () {
+            var sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("d-none");
+        });
+    </script>
+
 </body>
+
 </html>

@@ -26,6 +26,42 @@ echo '<!DOCTYPE html>
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
     <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="../assets/css/demo.css" />
+    <style>
+        /* Responsividade da Sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                box-shadow: none;
+                border-radius: 0;
+                margin-bottom: 20px;
+            }
+
+            .main-panel {
+                margin-left: 0;
+            }
+
+            .sidebar-link {
+                font-size: 14px;
+            }
+
+            .footer {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+
+        /* Ajustes para Tabelas em Telas Menores */
+        @media (max-width: 576px) {
+            .table-responsive {
+                margin-bottom: 15px;
+            }
+            .table th, .table td {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="sidebar d-flex flex-column align-items-start p-4 bg-dark text-white position-fixed" style="height: 100vh; width: 250px; border-radius: 0 15px 15px 0; box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);">
@@ -38,7 +74,7 @@ echo '<!DOCTYPE html>
         <a href="../routes/configuracao.php" class="text-white py-2 d-block sidebar-link mb-2"><i class="fas fa-cogs"></i> Configurações</a>
     </nav>
 
-    <div class="main-panel">
+    <div class="main-panel" style="margin-left: 250px;">
         <div class="content">
             <div class="container-fluid">
                 <h1 class="text-center mb-4"><i class="fas fa-file-alt"></i> Dados do Arquivo Importado</h1>';
@@ -101,7 +137,7 @@ if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) 
 
 echo '</div>
 <!-- Footer -->
-<footer class="footer">
+<footer class="footer mt-5">
     <div class="container-fluid">
         <nav class="pull-left">
             <ul class="nav">
@@ -127,3 +163,4 @@ echo '</div>
 <script src="../assets/js/kaiadmin.min.js"></script>
 </body>
 </html>';
+?>
