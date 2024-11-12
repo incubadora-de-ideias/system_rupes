@@ -136,21 +136,6 @@ if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) 
 }
 
 echo '</div>
-<!-- Footer -->
-<footer class="footer mt-5">
-    <div class="container-fluid">
-        <nav class="pull-left">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contato</a>
-                </li>
-            </ul>
-        </nav>
-        <div class="copyright ml-auto">
-            2024, feito com <i class="fa fa-heart heart text-danger"></i> por Você
-        </div>
-    </div>
-</footer>
 </div>
 </div>
 
